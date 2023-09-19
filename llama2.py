@@ -28,6 +28,7 @@ dotenv.load_dotenv()
 name = "meta-llama/Llama-2-7b-chat-hf"
 # Set auth token variable from hugging face 
 auth_token = os.getenv('HUGGINGFACEHUB_API_TOKEN')
+token='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'
 
 @st.cache_resource
 def get_tokenizer_model():

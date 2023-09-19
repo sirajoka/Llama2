@@ -16,4 +16,6 @@ datasets
 ctransformers
 einops 
 xformers
+llama_index
+pathlib
 

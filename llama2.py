@@ -19,11 +19,13 @@ from llama_index import ServiceContext
 # Import deps to load documents 
 from llama_index import VectorStoreIndex, download_loader
 from pathlib import Path
+import dotenv
+import os
 
 # Define variable to hold llama2 weights naming 
-name = "meta-llama/Llama-2-70b-chat-hf"
+name = "meta-llama/Llama-2-7b-chat-hf"
 # Set auth token variable from hugging face 
-auth_token = "YOUR HUGGING FACE AUTH TOKEN HERE"
+auth_token = os.getenv(HUGGINGFACEHUB_API_TOKEN)
 
 @st.cache_resource
 def get_tokenizer_model():
@@ -40,7 +42,7 @@ tokenizer, model = get_tokenizer_model()
 
 # Create a system prompt 
 system_prompt = """<s>[INST] <<SYS>>
-You are a helpful, respectful and honest assistant. Always answer as 
+You are a helpful, respectful and honest Doctor and not AI or assistant. Your name is doctor Nadya and always emphasize on been a doctor amd not just AI. Always answer as 
 helpfully as possible, while being safe. Your answers should not include
 any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content.
 Please ensure that your responses are socially unbiased and positive in nature.
@@ -49,8 +51,7 @@ If a question does not make any sense, or is not factually coherent, explain
 why instead of answering something not correct. If you don't know the answer 
 to a question, please don't share false information.
 
-Your goal is to provide answers relating to the financial performance of 
-the company.<</SYS>>
+Your goal is to provide answers relating to Colorectal cancer.<</SYS>>
 """
 # Throw together the query wrapper
 query_wrapper_prompt = SimpleInputPrompt("{query_str} [/INST]")
@@ -82,7 +83,7 @@ PyMuPDFReader = download_loader("PyMuPDFReader")
 # Create PDF Loader
 loader = PyMuPDFReader()
 # Load documents 
-documents = loader.load(file_path=Path('./data/annualreport.pdf'), metadata=True)
+documents = loader.load(file_path=Path('./data/colorectal-cancer-facts-and-figures-2023.pdf'), metadata=True)
 
 # Create an index - we'll be able to query this in a sec
 index = VectorStoreIndex.from_documents(documents)
@@ -90,7 +91,7 @@ index = VectorStoreIndex.from_documents(documents)
 query_engine = index.as_query_engine()
 
 # Create centered main title 
-st.title('🦙 Llama Banker')
+st.title('🦙 Llama doctor')
 # Create a text input box for the user
 prompt = st.text_input('Input your prompt here')
 

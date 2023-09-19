@@ -22,10 +22,12 @@ from pathlib import Path
 import dotenv
 import os
 
+dotenv.load_dotenv()
+
 # Define variable to hold llama2 weights naming 
 name = "meta-llama/Llama-2-7b-chat-hf"
 # Set auth token variable from hugging face 
-auth_token = os.getenv(HUGGINGFACEHUB_API_TOKEN)
+auth_token = os.getenv('HUGGINGFACEHUB_API_TOKEN')
 
 @st.cache_resource
 def get_tokenizer_model():
